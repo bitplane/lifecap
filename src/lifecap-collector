@@ -1,0 +1,9 @@
+#!/bin/bash
+
+HELP="Usage: lifecap collector [command]
+
+Commands to do with data collectors."
+
+. $(dirname $0)/subcmd.sh
+
+

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+HELP="Usage: lifecap collector ls
+
+Lists currently installed collectors"
+
+. $(dirname $0)/subcmd.sh
+
+# todo
+# cache_dir=
+
