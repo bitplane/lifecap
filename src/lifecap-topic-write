@@ -17,8 +17,8 @@ topic_name="$1"
 shift
 
 if [ -z "$topic_name" ]; then
-  echo "Error: No topic name specified."
-  echo "$HELP"
+  echo "Error: No topic name specified." >&2
+  echo "$HELP" >&2
   exit 1
 fi
 

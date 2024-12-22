@@ -21,15 +21,9 @@ fi
 # CASE 1: No partial path -> list all top-level topics
 # ------------------------------------------------------------
 if [ -z "$partial_path" ]; then
-  # If the directory for topics doesn't exist at all
-  if [ ! -d "$data_dir/topics" ]; then
-    echo "No topics found." >&2
-    exit 0
-  fi
-
   found="false"
   # List only directories at one level (i.e., topic names)
-  for d in "$data_dir/topics"/*/ 2>/dev/null; do
+  for d in "$data_dir/topics"/*/; do
     [ -d "$d" ] || continue
     found="true"
     echo "$(basename "$d")"

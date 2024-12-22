@@ -127,37 +127,42 @@ $front"
   # Start from RUN_DIR
   cd "$RUN_DIR" || return 1
 
-  # Descend directories, sourcing any _setup.sh
-  oldIFS="$IFS"
-  IFS='
+  (
+    # Descend directories, sourcing any _setup.sh
+    oldIFS="$IFS"
+    IFS='
 '
-  for d in $path_dirs; do
-    [ -z "$d" ] && continue
-    if ! __test_pushd "$d" >/dev/null; then
-      echo "ERROR: cannot push into '$d' (from path $file)" >&2
+    for d in $path_dirs; do
+      [ -z "$d" ] && continue
+      if ! __test_pushd "$d" >/dev/null; then
+        echo "ERROR: cannot push into '$d' (from path $file)" >&2
+        __test_cleanup_dirs
+        IFS="$oldIFS"
+        return 1
+      fi
+
+      if [ -f "_setup.sh" ]; then
+        . "./_setup.sh"
+      fi
+    done
+    IFS="$oldIFS"
+
+    # Must exist
+    if [ ! -f "$script_name" ]; then
+      echo "ERROR: test script '$script_name' not found in $(pwd -P)" >&2
       __test_cleanup_dirs
-      IFS="$oldIFS"
       return 1
     fi
 
-    if [ -f "_setup.sh" ]; then
-      . "./_setup.sh"
-    fi
-  done
-  IFS="$oldIFS"
+    # Run the test script in the current shell
+    set -e
+    . "./$script_name" || test_status=$?
 
-  # Must exist
-  if [ ! -f "$script_name" ]; then
-    echo "ERROR: test script '$script_name' not found in $(pwd -P)" >&2
     __test_cleanup_dirs
-    return 1
-  fi
 
-  # Run the test script in the current shell
-  . "./$script_name" || test_status=$?
-
-  __test_cleanup_dirs
-  return $test_status
+    return $test_status
+  )
+  return $?
 }
 
 ###############################################################################
@@ -219,4 +224,9 @@ __test_run_all() {
   IFS="$oldIFS"
 
   return $ret
+}
+
+__assert() {
+    [ "$1" "$2" "$3" ] && return 0
+    return 1
 }
