@@ -1,0 +1,9 @@
+#!/bin/bash
+
+HELP="Usage: lifecap topic [command]
+
+Topics are channels where data flows."
+
+. $(dirname $0)/lifecap_lib.sh
+
+

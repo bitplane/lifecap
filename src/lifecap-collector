@@ -4,6 +4,6 @@ HELP="Usage: lifecap collector [command]
 
 Commands to do with data collectors."
 
-. $(dirname $0)/subcmd.sh
+. $(dirname $0)/lifecap_lib.sh
 
 

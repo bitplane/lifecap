@@ -1,0 +1,81 @@
+#!/bin/bash
+
+HELP="Usage: lifecap topic write <name> [--timestamp=UNIXTIME] [--data=DATA]
+
+Writes DATA to the given topic. If no --data is given, stdin is assumed.
+"
+
+# Source your library file (adjust path if needed)
+. "$(dirname "$0")/lifecap_lib.sh"
+
+# ------------------------------------------------------------
+# Parse arguments
+# ------------------------------------------------------------
+
+# The first argument should be the topic name.
+topic_name="$1"
+shift
+
+if [ -z "$topic_name" ]; then
+  echo "Error: No topic name specified."
+  echo "$HELP"
+  exit 1
+fi
+
+# Initialize variables
+unix_time=""
+data=""
+
+# Parse the remaining arguments
+for arg in "$@"; do
+  case "$arg" in
+    --timestamp=*)
+      unix_time="${arg#*=}"
+      ;;
+    --data=*)
+      data="${arg#*=}"
+      ;;
+    --help)
+      echo "$HELP"
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $arg"
+      echo "$HELP"
+      exit 1
+      ;;
+  esac
+done
+
+# If no timestamp was provided, use the current time in seconds
+if [ -z "$unix_time" ]; then
+  unix_time="$(date +%s)"
+fi
+
+# If no data was provided, read from stdin
+if [ -z "$data" ]; then
+  data="$(cat)"
+fi
+
+# ------------------------------------------------------------
+# Construct data directory path (YYYY/MM/DD/%H)
+# ------------------------------------------------------------
+timestamp_path="$(date -d @"$unix_time" '+%Y/%m/%d/%H')"
+
+# XDG data directory fallback
+data_root="${XDG_DATA_HOME:-$HOME/.local/share}/lifecap"
+output_dir="$data_root/topics/$topic_name/$timestamp_path"
+
+# Create the directory if it doesn't exist
+mkdir -p "$output_dir"
+
+# ------------------------------------------------------------
+# Use MD5 hash of data as part of the filename
+# ------------------------------------------------------------
+data_md5="$(printf "%s" "$data" | md5sum | awk '{print $1}')"
+out_file="$output_dir/$unix_time.$data_md5"
+
+# Write data to a temporary file, then move into position
+tmp_file="$output_dir/tmp.$$"
+echo "$data" > "$tmp_file"
+mv "$tmp_file" "$out_file"

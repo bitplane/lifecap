@@ -1,0 +1,15 @@
+#!/bin/bash
+
+HELP="Lifecap collectors
+
+These are service programs that collect data of some sort.
+
+For installed ones, see:
+    lifecap collector ls
+
+To install one, it's:
+    lifecap collector add name path
+"
+
+. $(dirname $0)/lifecap_lib.sh
+

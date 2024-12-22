@@ -6,4 +6,6 @@ Lists currently installed collectors"
 
 . $(dirname $0)/lifecap_lib.sh
 
-ls $config_dir/collectors $*
+set -e
+
+rm "$config_dir/collectors/$1"

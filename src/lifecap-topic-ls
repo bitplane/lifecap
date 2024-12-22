@@ -1,0 +1,71 @@
+#!/bin/sh
+
+HELP="Usage: lifecap topic ls [partial_path]
+
+- If [partial_path] is omitted, lists all top-level topics.
+- If [partial_path] is given (e.g. \"email/from\"), lists the next level of
+  directories beneath that partial path.
+"
+
+. "$(dirname "$0")/lifecap_lib.sh"
+
+partial_path="$1"
+
+# If user explicitly wants help
+if [ "$partial_path" = "--help" ]; then
+  echo "$HELP"
+  exit 0
+fi
+
+# ------------------------------------------------------------
+# CASE 1: No partial path -> list all top-level topics
+# ------------------------------------------------------------
+if [ -z "$partial_path" ]; then
+  # If the directory for topics doesn't exist at all
+  if [ ! -d "$data_dir/topics" ]; then
+    echo "No topics found." >&2
+    exit 0
+  fi
+
+  found="false"
+  # List only directories at one level (i.e., topic names)
+  for d in "$data_dir/topics"/*/ 2>/dev/null; do
+    [ -d "$d" ] || continue
+    found="true"
+    echo "$(basename "$d")"
+  done
+
+  # If we didn’t find any subdirectories, there are no top-level topics
+  if [ "$found" = "false" ]; then
+    echo "No topics found." >&2
+  fi
+
+  exit 0
+fi
+
+# ------------------------------------------------------------
+# CASE 2: A partial path is provided
+# ------------------------------------------------------------
+topic_dir="$data_dir/topics/$partial_path"
+
+# If partial path doesn’t exist
+if [ ! -d "$topic_dir" ]; then
+  echo "No such path: $partial_path" >&2
+  exit 1
+fi
+
+found_subdir="false"
+# List only the next level of directories beneath $topic_dir
+for d in "$topic_dir"/*/ 2>/dev/null; do
+  [ -d "$d" ] || continue
+  found_subdir="true"
+  # Strip off the leading "$data_dir/topics/" and trailing slash
+  rel_path="${d#$data_dir/topics/}"
+  rel_path="${rel_path%/}"
+  echo "$rel_path"
+done
+
+# If there are no subdirectories
+if [ "$found_subdir" = "false" ]; then
+  echo "(No further subdirectories)" >&2
+fi
