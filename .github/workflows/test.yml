@@ -8,5 +8,5 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Test
-      run: ./test.sh
+    - name: Run CLI tests
+      run: cd test; ./run.sh cli

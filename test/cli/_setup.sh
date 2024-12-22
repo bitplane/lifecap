@@ -1,4 +1,4 @@
-export PATH=$(dirname "$0")/../src:$PATH
+export PATH=$(cd $(dirname "$0"); pwd)/../../src:$PATH
 
 export test_tempdir="/tmp/lifecap-tests-$$"
 mkdir -p "$test_tempdir"
