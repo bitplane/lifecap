@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 HELP="Usage: lifecap topic ls [pattern]
 
 List existing topics"
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
 ls -1 "$data_dir/topics/$1"
 

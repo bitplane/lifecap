@@ -227,6 +227,7 @@ __test_run_all() {
 }
 
 __assert() {
+    # shellcheck disable=SC1073,1072,1009
     [ "$1" "$2" "$3" ] && return 0
     return 1
 }

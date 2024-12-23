@@ -1,11 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
-HELP="Usage: lifecap collector ls
+HELP="Usage: lifecap job rm <name>
 
 Lists currently installed collectors"
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
-set -e
+if [ -z "$1" ]; then
+    echo "No such job"
+    echo "Jobs: $(ls "$config_dir"/collectors)"
+fi
 
-rm "$config_dir/collectors/$1"
+path="$config_dir/collectors/$1"
+
+path_exists "$path"
+
+rm "$path"
+

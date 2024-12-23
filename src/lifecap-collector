@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 HELP="Lifecap collectors
 
@@ -8,5 +8,7 @@ below by adding programs with lifecap-collector-name* to your path.
 See --help on the collectors themselves for configuration and use.
 "
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
+
+echo "$HELP"
 

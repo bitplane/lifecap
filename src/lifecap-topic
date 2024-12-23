@@ -4,7 +4,7 @@ HELP="Usage: lifecap topic [command]
 
 Topics are channels where data flows."
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
-echo $HELP >&2
+echo "$HELP" >&2
 exit 1

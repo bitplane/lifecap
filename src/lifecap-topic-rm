@@ -4,24 +4,10 @@ HELP="Usage: lifecap topic rm <name>
 
 Remove a topic by name"
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
-# Reject wildcards/globs
-case "$1" in
-  *[\*\?]* )
-    echo "Wildcards not allowed!"
-    exit 1
-    ;;
-  *\.\.* )
-    echo "No traversal, thanks."
-    exit 1
-    ;;
-esac
+path="$data_dir/topics/$1"
+path_exists "$path"
 
-# Resolve full path and ensure it’s under
-path=$data_dir/topics/$1
-real_path=$(cd "$(dirname "$path")" && pwd -P)/$(basename "$path")
-[ ! "$real_path" = "$path" ] && echo "Invalid path!" && exit 1
-
-rm -r $path
+rm -r "$path"
 

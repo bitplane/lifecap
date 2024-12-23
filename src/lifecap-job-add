@@ -5,27 +5,28 @@ HELP="Usage: lifecap job add <name> <collector_name> [collector options]
 Adds a data collection job.
 "
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
 name="$1"
 collector="$2"
-shift 2
 
 if [ -z "$name" ] || [ -z "$collector" ]; then
     echo "$HELP" >&2
     exit 1
 fi
 
-job_dir="$data_dir/jobs/$name"
+shift 2
 
-safe_path "$data_dir/jobs" "$name"
+job_dir="$config_dir/jobs/$name"
+
+safe_path "$job_dir"
 
 if [ -e "$job_dir" ]; then
     echo "Job '$name' already exists" >&2
     exit 1
 fi
 
-if [ -z "$(lifecap collector options | grep "$collector")" ]; then
+if ! "$(lifecap collector options | grep -q "$collector")"; then
     echo "Collector '$collector' doesn't exist" >&2
     echo "Options: $(lifecap collector options)" >&2
     exit 1
@@ -37,6 +38,7 @@ mkdir -p "$job_dir"
 # Configure the collector
 if ! lifecap collector "$collector" setup "$job_dir" "$@"; then
     echo "Job creation failed." >&2
-    rm -r $job_dir
+    rm -r "$job_dir"
+    exit 1
 fi
 

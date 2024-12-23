@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 HELP="Usage: lifecap collector ls
 
 Lists currently installed collectors"
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
-ls -1 $config_dir/collectors
+ls -1 "$config_dir/collectors"

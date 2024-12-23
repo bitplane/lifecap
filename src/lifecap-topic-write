@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 HELP="Usage: lifecap topic write <name> [--timestamp=UNIXTIME] [--data=DATA]
 

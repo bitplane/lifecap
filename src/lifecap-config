@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
 HELP="Usage: lifecap config [command]
 
 Lists the config"
 
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
-echo config_dir: $config_dir
-echo cache_dir: $cache_dir
-echo data_dir: $data_dir
+echo config_dir: "$config_dir"
+echo cache_dir: "$cache_dir"
+echo data_dir: "$data_dir"
 

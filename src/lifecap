@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 HELP="Usage: lifecap [command]
 
@@ -6,6 +6,7 @@ lifecap captures a stream of events about your life, to feed into summarization
 and aggregation systems. The idea is that we use collectors to gather data,
 which publish events to topics that other collectors might be interested in.
 "
-. $(dirname $0)/lifecap_lib.sh
+. "$(dirname "$0")"/lifecap_lib.sh
 
+echo "$HELP"
 
