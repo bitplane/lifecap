@@ -1,0 +1,10 @@
+#!/bin/bash
+
+HELP="Usage: lifecap job [command]
+
+Commands to do with data collection jobs."
+
+. $(dirname $0)/lifecap_lib.sh
+
+echo "$HELP"
+

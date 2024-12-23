@@ -1,9 +1,12 @@
 #!/bin/bash
 
-HELP="Usage: lifecap collector [command]
+HELP="Lifecap collectors
 
-Commands to do with data collectors."
+Collectors are programs that gather data for/about the user. Add them to the list
+below by adding programs with lifecap-collector-name* to your path.
+
+See --help on the collectors themselves for configuration and use.
+"
 
 . $(dirname $0)/lifecap_lib.sh
-
 
