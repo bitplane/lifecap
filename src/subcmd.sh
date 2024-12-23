@@ -29,12 +29,16 @@ prefix="$(basename "$0")"
 # If we're running --help
 if [ "$1" = "--help" ]; then
     echo "$HELP"
-    echo
-    echo "Commands:"
-    for cmd in $(all_commands "$prefix" | sed "s/^$prefix-//")
-    do
-        echo "  $cmd"
-    done
+    commands=$(all_commands "$prefix" | sed "s/^$prefix-//")
+    if [ ! "${commands}" = "" ]; then
+        echo
+
+        echo "Commands:"
+        for cmd in $commands
+        do
+            echo "  $cmd"
+        done
+    fi
     exit 0
 fi
 
@@ -47,6 +51,12 @@ if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then
         exec "${prefix}-${subcmd}" "$@"
         exit $?
     fi
+fi
+
+# If the argument is 'options' then we print the list of subcommands
+if [ "$1" = "options" ]; then
+    all_commands "$prefix" | sed "s/^$prefix-//"
+    exit 0
 fi
 
 # otherwise, carry on
