@@ -45,7 +45,7 @@ lifecap topic messages email/gaz@bitplane.net/inbox --from=2001 --to=2003
 * Collectors remember where they're up to on their sources and stream from
   a last known date, using `lifecap topic messages topic -f ...`
 
-### ❓ Why?
+### ❓ Why
 
 At the highest level, the data is streamed to ML algorithms that extract real
 context and summarize your life. It can be pushed into RAG databases and so on,
@@ -58,7 +58,7 @@ hour, day, month and year levels, and combining multiple summary sources we
 have a tree of the user's life activity that can actually be queried
 efficiently.
 
-## 💩 Ethical considerations
+## 🎓 Ethical considerations
 
 Any data collection project of this magnitude must balance user needs against
 clear and present dangers associated with holding and processing such higly
@@ -88,3 +88,22 @@ Do whatever the fuck you want to, as long as you don't blame me.
 * [🏠 home](https://bitplane.net/dev/sh/lifecap)
 * [🐱 github](https://github.com/bitplane/lifecap)
 
+### 🧩 Components + extensions
+
+Trying to keep this as modular as possible
+
+#### 💾 Data sources
+
+* [🌍 web archiver](https://bitplane.net/dev/sh/lifecap/scoop) -
+  archive links, web service in Docker using scoop.
+* [👽 reddit](https://bitplane.net/dev/sh/lifecap/reddit) -
+  download reddit posts and comments for a given user.
+* [🗣️ catvox](https://bitplane.net/dev/python/catvox) -
+  like `cat` but for your voice; STT for pipes.
+
+#### 🔌 Libraries
+
+* [🐋 pierdat](https://bitplane.net/dev/sh/pierdat) -
+  docker containers that host their own data.
+* [📺 subcmd](https://bitplane.net/dev/sh/subcmd) -
+  converting `cmd subcmd` to `cmd-subcmd`.
