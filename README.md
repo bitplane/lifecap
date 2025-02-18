@@ -1,8 +1,8 @@
-# lifecap
+# 💾 lifecap
 
 Cache and summarize your life.
 
-## Structure
+## 🧱 Structure
 
 * There's some shell scripts in ./src
 * There's some tests in ./test
@@ -10,7 +10,7 @@ Cache and summarize your life.
 
 None of it is finished
 
-## Plan
+## 📝 Plan
 
 Pull data from various sources:
 
@@ -45,20 +45,20 @@ lifecap topic messages email/gaz@bitplane.net/inbox --from=2001 --to=2003
 * Collectors remember where they're up to on their sources and stream from
   a last known date, using `lifecap topic messages topic -f ...`
 
-### Why?
+### ❓ Why?
 
 At the highest level, the data is streamed to ML algorithms that extract real
 context and summarize your life. It can be pushed into RAG databases and so on,
 giving agents enough context to actually work on behalf of the user.
 
-### This seems excessive
+### 💀 This seems excessive
 
 Yes, yes it does. But it'll grant superpowers. By summarizing at the minute,
 hour, day, month and year levels, and combining multiple summary sources we
 have a tree of the user's life activity that can actually be queried
 efficiently.
 
-## Ethical considerations
+## 💩 Ethical considerations
 
 Any data collection project of this magnitude must balance user needs against
 clear and present dangers associated with holding and processing such higly
@@ -75,10 +75,16 @@ terms that MUST be accepted before using this software. Please see the license
 section for these terms in full. We hope you find the length, depth, and girth
 of this choice to your tastes.
 
-## License
+## ⚖️ License
 
 WTFPL with one additional clause:
 
 1. DON'T BLAME ME
 
 Do whatever the fuck you want to, as long as you don't blame me.
+
+## 🔗 Links
+
+* [🏠 home](https://bitplane.net/dev/sh/lifecap)
+* [🐱 github](https://github.com/bitplane/lifecap)
+
